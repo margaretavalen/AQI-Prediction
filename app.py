@@ -73,6 +73,8 @@ def app():
         o3 = st.number_input('O3 (ppm)', min_value=0.0, format="%.3f")
         no2 = st.number_input('NO2 (ppm)', min_value=0.0,  format="%.3f")
 
+    st.write(f"Input data: PM10={pm10}, PM2.5={pm25}, SO2={so2}, CO={co}, O3={o3}, NO2={no2}")
+
     # Model selection
     selected_model_name = st.selectbox('Select a model', list(models.keys()))
 
