@@ -67,13 +67,13 @@ def app():
     # Input fields for pollutant data
     col1, col2 = st.columns(2)
     with col1:
-        so2 = st.number_input('SO2 (ppm)', min_value=0.0, max_value=1.0, format="%.3f")
-        no2 = st.number_input('NO2 (ppm)', min_value=0.0, max_value=50.0, format="%.3f")
-        o3 = st.number_input('O3 (ppm)', min_value=0.0, max_value=0.6, format="%.3f")
+        so2 = st.number_input('SO2 (ppm)', min_value=0.0, format="%.3f")
+        no2 = st.number_input('NO2 (ppm)', min_value=0.0,  format="%.3f")
+        o3 = st.number_input('O3 (ppm)', min_value=0.0, format="%.3f")
     with col2:
-        co = st.number_input('CO (ppm)', min_value=0.0, max_value=2.0, format="%.3f")
-        pm10 = st.number_input('PM10 (µg/m³)', min_value=0.0, max_value=600.0, format="%.3f")
-        pm25 = st.number_input('PM2.5 (µg/m³)', min_value=0.0, max_value=500.0, format="%.3f")
+        co = st.number_input('CO (ppm)', min_value=0.0, format="%.3f")
+        pm10 = st.number_input('PM10 (µg/m³)', min_value=0.0, format="%.3f")
+        pm25 = st.number_input('PM2.5 (µg/m³)', min_value=0.0, format="%.3f")
 
     # Model selection
     selected_model_name = st.selectbox('Select a model', list(models.keys()))
