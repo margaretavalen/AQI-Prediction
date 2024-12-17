@@ -1,5 +1,6 @@
 import streamlit as st
 import pickle
+import os
 
 # Streamlit page configuration
 st.set_page_config(
@@ -28,24 +29,25 @@ models = {
 def load_model(filename):
     """Loads a model from a pickle file."""
     try:
+        if not os.path.exists(filename):
+            raise FileNotFoundError(f"Model file '{filename}' not found.")
         with open(filename, 'rb') as model_file:
             model = pickle.load(model_file)
         return model
-    except Exception as e:
+    except FileNotFoundError as e:
         st.error(f"Error loading the model: {e}")
+        return None
+    except Exception as e:
+        st.error(f"Unexpected error loading the model: {e}")
         return None
 
 def predict_pollution(model, pm10, pm25, so2, co, o3, no2):
     """Predicts air pollution level using the provided model and input data."""
-    if model is not None:
-        try:
-            prediction = model.predict([[pm10, pm25, so2, co, o3, no2]])
-            return prediction
-        except Exception as e:
-            st.error(f"Prediction error: {e}")
-            return None
-    else:
-        st.error("Model not loaded.")
+    try:
+        prediction = model.predict([[pm10, pm25, so2, co, o3, no2]])
+        return prediction
+    except Exception as e:
+        st.error(f"Prediction error: {e}")
         return None
 
 def map_pollution_level(prediction):
