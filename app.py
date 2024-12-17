@@ -85,7 +85,7 @@ def app():
     classifier = load_model(model_filename)
 
     # Define the prediction function
-    def predict_pollution(pm10, pm25, so2,  co, o3, no2):
+    def predict_pollution(model, pm10, pm25, so2,  co, o3, no2):
         if classifier is not None:
             prediction = classifier.predict([[pm10, pm25, so2,  co, o3, no2]])
             return prediction
