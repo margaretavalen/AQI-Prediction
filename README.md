@@ -18,7 +18,6 @@ This project predicts the **Air Quality Index (AQI)** based on input parameters 
 ### 1️ Clone the Repository  
 ```bash
 git clone https://github.com/yourusername/AQI-Prediction
-cd AQI_Prediction
 ```
 ### 2️ Install Dependencies  
 ```bash
