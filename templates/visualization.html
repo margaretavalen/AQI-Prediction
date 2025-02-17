@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="templatemo">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <title>Air Quality Index Prediction</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fontawesome.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/templatemo-liberty-market.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/owl.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animate.css') }}">
+    <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+
+    <style type="text/css">
+      /* Graph Section */
+      #plot_1, #plot_2, #plot_3 {
+          margin-top: 30px;
+          background-color: #00000000;
+          padding: 15px;
+          border-radius: 5px;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      #plot_1 h2, #plot_2 h2, #plot_3 h2 {
+          font-size: 24px;
+          font-weight: 700;
+          margin-bottom: 15px;
+      }
+
+      hr {
+          border: 1px solid #ccc;
+          margin: 30px 0;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="js-preloader" class="js-preloader">
+      <div class="preloader-inner">
+        <span class="dot"></span>
+        <div class="dots">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky">
+      <div class="container">
+          <div class="row">
+              <div class="col-12">
+                  <nav class="main-nav">
+                      <!-- ***** Logo Start ***** -->
+                      <a href="/" class="logo">
+                          <img src="{{ url_for('static', filename='images/logo.png') }}" alt="">
+                      </a>
+                      <!-- ***** Logo End ***** -->
+                      <!-- ***** Menu Start ***** -->
+                      <ul class="nav">
+                        <li><a href='/'>Home</a></li>
+                        <li><a href='/data'>Data</a></li>
+                        <li><a href='/predict'>Prediction</a></li>
+                        <li><a href='/visual' class="active">Visualization</a></li>
+                        <li><a href='/author'>Author</a></li>
+                      </ul> 
+                      <a class='menu-trigger'>
+                          <span>Menu</span>
+                      </a>
+                      <!-- ***** Menu End ***** -->
+                  </nav>
+              </div>
+          </div>
+      </div>
+    </header>
+    <!-- ***** Header Area End ***** -->
+
+    <div class="page-heading normal-space">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <h6>Visualization</h6>
+            <h2>Air Quality Index Visualization</h2>
+            <span>Home > <a href="#">Visualization</a></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item-details-page">
+      <div class="container">
+        <h1>Air Quality Visualization for {{ stasiun_filter }}</h1>
+      
+        <form action="/visualization" method="POST">
+            <label for="stasiun">Station:</label>
+            <select name="stasiun" id="stasiun">
+                {% for station in stations %}
+                    <option value="{{ station }}" {% if station == stasiun_filter %} selected {% endif %}>{{ station }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="pollutant">Pollutant:</label>
+            <select name="pollutant" id="pollutant">
+                <option value="pm10" {% if pollutant_filter == 'pm10' %} selected {% endif %}>PM10</option>
+                <option value="pm25" {% if pollutant_filter == 'pm25' %} selected {% endif %}>PM2.5</option>
+                <option value="so2" {% if pollutant_filter == 'so2' %} selected {% endif %}>SO2</option>
+                <option value="co" {% if pollutant_filter == 'co' %} selected {% endif %}>CO</option>
+                <option value="o3" {% if pollutant_filter == 'o3' %} selected {% endif %}>O3</option>
+                <option value="no2" {% if pollutant_filter == 'no2' %} selected {% endif %}>NO2</option>
+                <option value="AQI" {% if pollutant_filter == 'AQI' %} selected {% endif %}>AQI</option>
+            </select>
+
+            <button type="submit">Tampilkan Visualisasi</button>
+        </form>
+
+        <hr>
+        <h2>Time Series Plot: {{ pollutant_filter }}</h2>
+        <div id="plot_1">
+            {{ graph_1 | safe }}
+        </div>
+        
+        <h2>Distribution of {{ pollutant_filter }} Levels</h2>
+        <div id="plot_2">
+            {{ graph_2 | safe }}
+        </div>
+        
+        <h2>AQI Category Distribution</h2>
+        <div id="plot_3">
+            {{ graph_3 | safe }}
+        </div>
+      </div>
+    </div>
+    
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <p>Copyright © 2025 <a href="#">AQI Prediction</a>by Alfin Rifaldi and Margareta Valencia
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='js/isotope.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/owl-carousel.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='js/tabs.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/popup.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  </body>
+</html>
