@@ -1,6 +1,5 @@
 # Air Quality Index (AQI) Prediction Poject 🌍 
 
-## Overview 📌 
 This project predicts the **Air Quality Index (AQI)** based on input parameters using a pre-trained machine learning model. It utilizes machine learning Support Vector Machine (SVM) and K Nearest Neighbours (KNN) models trained on historical data to provide accurate AQI predictions. It's designed to be user-friendly, allowing users to easily enter air quality parameters and receive instant predictions.
 
 ---
